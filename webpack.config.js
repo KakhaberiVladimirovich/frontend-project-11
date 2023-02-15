@@ -3,6 +3,9 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
   mode: process.env.NODE_ENV || 'development',
+  watchOptions: {
+    poll: 1000,
+  },
   module: {
     rules: [
       {
