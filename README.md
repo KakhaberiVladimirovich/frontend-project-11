@@ -4,4 +4,4 @@
 
 ## Vercel
 
-<a href="https://frontend-project-11-iota.vercel.app"><img src="https://frontend-project-11-iota.vercel.app.png" width="500"/></a>
+<a href="https://frontend-project-11-iota.vercel.app?autoplay=1"><img src="https://frontend-project-11-iota.vercel.app.png" width="500"/></a>
