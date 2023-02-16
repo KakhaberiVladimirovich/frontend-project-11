@@ -3,5 +3,4 @@
 <a href="https://codeclimate.com/github/Kachabery/frontend-project-11/maintainability"><img src="https://api.codeclimate.com/v1/badges/f794104deea448c7c996/maintainability" /></a>
 
 ## Vercel
-
-<a href="https://frontend-project-11-iota.vercel.app?autoplay=1"><img src="https://frontend-project-11-iota.vercel.app.png" width="500"/></a>
+[Click](https://frontend-project-11-iota.vercel.app/) 
