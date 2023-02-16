@@ -1,4 +1,3 @@
-# webpack-package
-
-[![github action status](https://github.com/hexlet-boilerplates/webpack-package/workflows/Node%20CI/badge.svg)](https://github.com/hexlet-boilerplates/webpack-package/actions)
-[![Code Climate](https://codeclimate.com/github/hexlet-boilerplates/webpack-package/badges/gpa.svg)](https://codeclimate.com/github/hexlet-boilerplates/webpack-package)
+### CI status
+[![Node CI](https://github.com/Kachabery/frontend-project-11/workflows/Node_CI/badge.svg?event=push)](https://github.com/Kachabery/frontend-project-11/actions/workflows/github-actions-demo.yml
+<a href="https://codeclimate.com/github/Kachabery/frontend-project-11/maintainability"><img src="https://api.codeclimate.com/v1/badges/f794104deea448c7c996/maintainability" /></a>
