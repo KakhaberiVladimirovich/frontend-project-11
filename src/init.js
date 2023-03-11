@@ -56,6 +56,7 @@ export default () => {
     const schema = yup.string()
       .url()
       .notOneOf(state.feeds)
+      .required()
       .trim();
     schema.validate(state.data)
       .then(() => {

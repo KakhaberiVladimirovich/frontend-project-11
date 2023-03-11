@@ -1,12 +1,9 @@
-import _ from 'lodash';
-
-const errorHandler = (elements, err) => {
-  const { input, feedback, btn } = elements;
+const errorHandler = (elements, i18nInstance, state) => {
+  const { input, feedback } = elements;
   input.classList.add('is-invalid');
-  feedback.textContent = err;
+  feedback.textContent = i18nInstance.t(`${state.validation.error}`);
   feedback.classList.add('text-danger');
   feedback.classList.remove('text-success');
-  btn.disabled = false;
 };
 
 const finishHandler = (elements, i18nInstance) => {
@@ -24,7 +21,7 @@ export default (state, elements, i18nInstance) => (path, value) => {
   switch (path) {
     case 'processState':
       if (value === 'failed') {
-        errorHandler(elements, state.validation.error);
+        errorHandler(elements, i18nInstance, state);
       }
       if (value === 'finished') {
         finishHandler(elements, i18nInstance);
