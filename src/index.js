@@ -1,1 +1,4 @@
-console.log("Hello WorldsSS@@@@!!");
+import  './styles.scss';
+import  'bootstrap';
+
+console.log("Hello WorldsSS!!");
