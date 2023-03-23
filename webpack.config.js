@@ -5,8 +5,10 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const isProduction = process.env.NODE_ENV == 'production';
 
-
 const config = {
+    watchOptions: {
+        poll: 1000,
+      },
     entry: './src/index.js',
     output: {
         path: path.resolve(__dirname, 'dist'),
@@ -14,6 +16,7 @@ const config = {
     devServer: {
         open: true,
         host: 'localhost',
+        hot: true,
     },
     plugins: [
         new HtmlWebpackPlugin({
@@ -37,6 +40,7 @@ const config = {
 };
 
 module.exports = () => {
+
     if (isProduction) {
         config.mode = 'production';
         
