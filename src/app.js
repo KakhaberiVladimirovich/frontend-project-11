@@ -1,5 +1,7 @@
 import * as yup from 'yup';
 import onChange from 'on-change';
+import i18next from 'i18next';
+import resources from './locales/index.js';
 import render from './render';
 
 const elements = {
@@ -10,15 +12,21 @@ const elements = {
 
 yup.setLocale({
   mixed: {
-    notOneOf: 'RSS уже существует',
+    notOneOf: 'inputFeedback.errors.alreadyExist',
     default: 'the entered data is not valid',
   },
   string: {
-    url: 'Ссылка должна быть валидным URL',
+    url: 'inputFeedback.errors.notValidUrl',
   },
 });
 
 export default () => {
+  const i18nInstance = i18next.createInstance();
+  i18nInstance.init({
+    lng: 'ru',
+    debug: false,
+    resources,
+  });
   const state = {
     process: 'filling',
     data: '',
@@ -27,7 +35,7 @@ export default () => {
     feeds: [],
   };
 
-  const watchedState = onChange(state, render(state, elements));
+  const watchedState = onChange(state, render(state, elements, i18nInstance));
 
   elements.form.addEventListener('submit', (e) => {
     e.preventDefault();
