@@ -101,7 +101,11 @@ export default (state, elements, i18nInstance) => (path, value) => {
         passedValidation(state, elements, i18nInstance);
       }
       break;
-
+    case 'modal':
+      elements.modalTitle.textContent = value.title;
+      elements.modalDescr.textContent = value.description;
+      elements.fullArticleButton.href = value.link;
+      break;
     default:
       break;
   }

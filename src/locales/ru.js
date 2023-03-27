@@ -3,6 +3,10 @@ export default {
     feeds: 'Фиды',
     posts: 'Посты',
     preview: 'Просмотр',
+    modal: {
+      read: 'Читать полностью',
+      close: 'Закрыть',
+    },
     inputFeedback: {
       errors: {
         notValidUrl: 'Ссылка должна быть валидным URL',
