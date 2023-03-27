@@ -2,6 +2,7 @@ export default {
   translation: {
     feeds: 'Фиды',
     posts: 'Посты',
+    preview: 'Просмотр',
     inputFeedback: {
       errors: {
         notValidUrl: 'Ссылка должна быть валидным URL',
