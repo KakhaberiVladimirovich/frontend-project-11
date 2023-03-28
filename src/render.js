@@ -36,7 +36,7 @@ const container = (title, state, elements, i18nInstance) => {
       const postsListItem = document.createElement('li');
       postsListItem.classList.add('list-group-item', 'd-flex', 'justify-content-between', 'align-items-start', 'border-0', 'border-end-0');
       const a = document.createElement('a');
-      a.classList.add('fw-bold');
+      a.classList.add(state.readPostIds.has(post.id) ? ('fw-normal', 'link-secondary') : 'fw-bold');
       a.href = post.link;
       a.target = '_blank';
       a.rel = 'noopener noreferrer';
@@ -64,6 +64,12 @@ const sendingHandler = (elements) => {
 
 const errorValidation = (elements, err, i18nInstance) => {
   const { input, feedback } = elements;
+  if (err === 'Network Error') {
+    feedback.classList.remove('text-success');
+    feedback.classList.add('text-danger');
+    feedback.textContent = i18nInstance.t('inputFeedback.errors.networkError');
+    return;
+  }
   input.classList.add('is-invalid');
   feedback.classList.add('text-danger');
   feedback.classList.remove('text-success');
@@ -101,10 +107,17 @@ export default (state, elements, i18nInstance) => (path, value) => {
         passedValidation(state, elements, i18nInstance);
       }
       break;
+
+    case 'readPostIds':
+      container('posts', state, elements, i18nInstance);
+      break;
+    case 'posts':
+      container('posts', state, elements, i18nInstance);
+      break;
     case 'modal':
-      elements.modalTitle.textContent = value.title;
-      elements.modalDescr.textContent = value.description;
-      elements.fullArticleButton.href = value.link;
+      elements.modal.title.textContent = value.title;
+      elements.modal.body.textContent = value.description;
+      elements.modal.fullArticleButton.href = value.link;
       break;
     default:
       break;

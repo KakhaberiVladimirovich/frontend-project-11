@@ -4,7 +4,7 @@ export default (contents) => {
   const xmlDocument = parser.parseFromString(contents, 'application/xml');
   const rootTagName = xmlDocument.documentElement.tagName.toLowerCase();
   if (rootTagName !== 'rss') {
-    throw new Error('noRSS');
+    throw new Error('inputFeedback.errors.notValidRSS');
   }
 
   const feedTitle = xmlDocument.querySelector('title').textContent;

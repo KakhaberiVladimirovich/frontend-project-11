@@ -14,25 +14,32 @@ const elements = {
   posts: document.querySelector('.posts'),
   feeds: document.querySelector('.feeds'),
   btn: document.querySelector('button[type="submit"]'),
-  modalTitle: document.querySelector('.modal-title'),
-  modalDescr: document.querySelector('.modal-body'),
-  modalReadBtn: document.querySelector('.modal-link'),
-  modalCloseBtn: document.querySelector('.modal-close'),
-  fullArticleButton: document.querySelector('.full-article'),
+  modal: {
+    title: document.querySelector('.modal-title'),
+    body: document.querySelector('.modal-body'),
+    fullArticleButton: document.querySelector('.full-article'),
+  },
 };
 
 yup.setLocale({
   mixed: {
     notOneOf: 'inputFeedback.errors.alreadyExist',
-    default: 'the entered data is not valid',
+    default: 'inputFeedback.errors.unknownError',
   },
   string: {
     url: 'inputFeedback.errors.notValidUrl',
   },
 });
 
-const axiosResponse = (url) => axios.get(`https://allorigins.hexlet.app/get?disableCache=true&url=${encodeURIComponent(url)}`);
+const getAxiosResponse = (url) => {
+  const allOriginsLink = 'https://allorigins.hexlet.app/get';
 
+  const preparedURL = new URL(allOriginsLink);
+  preparedURL.searchParams.set('disableCache', 'true');
+  preparedURL.searchParams.set('url', url);
+
+  return axios.get(preparedURL);
+};
 const addFeeds = (id, title, description, watchedState) => {
   watchedState.feeds.unshift({ id, title, description });
 };
@@ -66,34 +73,16 @@ export default () => {
     readPostIds: new Set(),
   };
 
-  // const getCurrentPosts = (data) => data.map((post) => {
-  //   const { title, link, description } = post;
-  //   return { title, link, description };
-  // });
-
-  //   const getUniquePosts = (posts, currentPosts) =>
-  // _.differenceWith(posts, currentPosts, _.isEqual);
-  // const normalizeData = (feeds, posts, feedUrl) => {
-  //   const feedId = _.get(feeds, 'id', _.uniqueId('feed'));
-  //   const normalizedFeed = { ...feeds, id: feedId, url: feedUrl };
-  //   const normalizedPosts = posts.map((post) => {
-  //     const id = _.uniqueId('post');
-  //     return { ...post, id, feedId };
-  //   });
-  //   return { feed: normalizedFeed, posts: normalizedPosts };
-  // };
-
   const postsUpdate = (url, feedId, watchedState) => {
     const timeout = 5000;
     const inner = () => {
-      axiosResponse(url)
+      getAxiosResponse(url)
         .then((response) => parseRSS(response.data.contents))
         .then((parsedRSS) => {
           const postsUrls = watchedState.posts
             .filter((post) => feedId === post.feedId)
             .map(({ link }) => link);
           const newPosts = parsedRSS.posts.filter(({ link }) => !postsUrls.includes(link));
-          console.log(newPosts);
           if (newPosts.length > 0) {
             addPosts(feedId, newPosts, watchedState);
           }
@@ -107,6 +96,7 @@ export default () => {
   };
 
   const watchedState = onChange(state, render(state, elements, i18nInstance));
+
   const validate = (url) => {
     const schema = yup.string().url().notOneOf(state.rssLinks).trim();
     schema.validate(url)
@@ -114,7 +104,7 @@ export default () => {
         watchedState.validation = 'valid';
         watchedState.process = 'sending';
       })
-      .then(() => axiosResponse(url))
+      .then(() => getAxiosResponse(url))
       .then((response) => parseRSS(response.data.contents))
       .then((parsedRSS) => {
         const feedId = _.uniqueId();
@@ -130,7 +120,7 @@ export default () => {
       })
       .catch((err) => {
         watchedState.validation = 'invalid';
-        watchedState.err = err.message;
+        watchedState.err = err.message ?? 'default';
         watchedState.process = 'failed';
       })
       .finally(() => {
